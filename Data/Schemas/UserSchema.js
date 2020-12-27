@@ -19,6 +19,11 @@ const UserSchema = new mongoose.Schema({
     Date: {
         type: Date, 
         default: Date.now()
+    }, 
+
+    Nome: {
+        type: String, 
+        required: true
     }
 
 

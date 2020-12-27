@@ -8,54 +8,79 @@ const jwt = require("jsonwebtoken")
 
 
 router.post("/RegisterRoute", async (req, res) => { 
+    console.log(req.body.Data)
     const userencode = req.body.Data.replace(".willys", "").split(":")
-    const [Email, password] = userencode
+    console.log(userencode)
+    const [Email, password, nome] = userencode
+    console.log(nome)
     const userDECODADO = {
         Email: new Buffer(Email, "base64").toString("ascii"),
-        Password: new Buffer(password, "base64").toString("ascii")
+        Password: new Buffer(password, "base64").toString("ascii"),
+        Nome: new Buffer(nome, "base64").toString("ascii")
     }    
-    if(!userDECODADO.Email || !userDECODADO.Password){
+    
+
+
+    if(!userDECODADO.Email || !userDECODADO.Password || !userDECODADO.Nome){
         res.status(400).send({
             ok: false, 
             statusmensage: "No content"
         })
     }else{
-        await new UserMONGO({
-            Email: userDECODADO.Email,
-            Password: await bcrypt.hash(userDECODADO.Password, 10)
-        }).save().then(e => {
-
-
-           const token =  jwt.sign({
-                id: e.id, 
-                username: null // talvez dps eu faço algo em relação a isso
-            }, "winaggen123", {expiresIn: (60000 * 60) * 24})
-
-            res.cookie("Auth", token, {maxAge: new Date(Date.now() + 9999999), httpOnly: true, sameSite: "lax"})
-
-            res.status(201).send({
-                ok: true, 
-                statusmensage: "Created",
+        const emailcheck = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        if(emailcheck.test(userDECODADO.Email) && userDECODADO.Nome.length <= 12){
+            await new UserMONGO({
+                Email: userDECODADO.Email,
+                Nome: userDECODADO.Nome.replace(/</g, "&lt").replace(/>/g, "&gt"),
+                Password: await bcrypt.hash(userDECODADO.Password, 10)
+            }).save().then(e => {
+    
+               const token =  jwt.sign({ 
+                    username: e.Nome, 
+                    info: {
+                        user: "user1",
+                        master: false, 
+                        godmod: "amor você é tudo que eu preciso, com vc eu to no seu eu to no paraiso",
+                        
+                    } 
+                }, "winaggen123", {expiresIn: (60000 * 60) * 24})
+    
+                res.cookie("Auth", token, {maxAge: new Date(Date.now() + 9999999), httpOnly: true, sameSite: "lax"})
+    
+                res.status(201).send({
+                    ok: true, 
+                    statusmensage: "Created",
+                })
+                
+    
+            }).catch(err => {
+                if(err.code === 11000){
+                    res.status(400).send({
+                        ok: false, 
+                        statusmensage: "Email aready exists",
+                        code: err.code
+                    })
+                }else{
+                    res.status(400).send({
+                        ok: false, 
+                        statusmensage: "ERROR MENSAGE FROM MONGODB: " + err
+                    })
+    
+                }
+    
+                
+    
             })
             
+        }else{
+            res.status(400).send({
+                ok: false, 
+                statusmensage: "Dados incorretos"
+            })
 
-        }).catch(err => {
-            if(err.code === 11000){
-                res.status(400).send({
-                    ok: false, 
-                    statusmensage: "Email aready exists"
-                })
-            }else{
-                res.status(400).send({
-                    ok: false, 
-                    statusmensage: "ERROR MENSAGE FROM MONGODB: " + err
-                })
+        }
 
-            }
-
-            
-
-        })
+       
         
         
 
