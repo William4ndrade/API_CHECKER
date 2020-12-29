@@ -2,17 +2,13 @@ const express = require("express")
 const router = express.Router()
 const bcrypt = require("bcrypt")
 const UserMONGO = require("../../Data/Schemas/UserSchema")
-const jwt = require("jsonwebtoken")
-
+const Jwt = require("../../jwt/JwtFunctions")
 
 
 
 router.post("/RegisterRoute", async (req, res) => { 
-    console.log(req.body.Data)
     const userencode = req.body.Data.replace(".willys", "").split(":")
-    console.log(userencode)
     const [Email, password, nome] = userencode
-    console.log(nome)
     const userDECODADO = {
         Email: new Buffer(Email, "base64").toString("ascii"),
         Password: new Buffer(password, "base64").toString("ascii"),
@@ -34,17 +30,7 @@ router.post("/RegisterRoute", async (req, res) => {
                 Nome: userDECODADO.Nome.replace(/</g, "&lt").replace(/>/g, "&gt"),
                 Password: await bcrypt.hash(userDECODADO.Password, 10)
             }).save().then(e => {
-    
-               const token =  jwt.sign({ 
-                    username: e.Nome, 
-                    info: {
-                        user: "user1",
-                        master: false, 
-                        godmod: "amor você é tudo que eu preciso, com vc eu to no seu eu to no paraiso",
-                        
-                    } 
-                }, "winaggen123", {expiresIn: (60000 * 60) * 24})
-    
+               const token =  Jwt.Sign(e.id, e.Nome)
                 res.cookie("Auth", token, {maxAge: new Date(Date.now() + 9999999), httpOnly: true, sameSite: "lax"})
     
                 res.status(201).send({
