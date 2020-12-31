@@ -17,7 +17,6 @@ const Sign = (id, name) => {
 
 }
 
-console.log(SECRET_KEY)
 
 const verify = (token) => jwt.verify(token, SECRET_KEY)
 

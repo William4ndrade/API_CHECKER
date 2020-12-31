@@ -2,16 +2,17 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const app = express()
 const cors = require("cors")
-const cookieparser = require("cookie-parser")
+const cookieParser = require("cookie-parser")
 
 // ROTAS 
 const RegisterRoute = require("./Routes/Auth/RegisterRoute")
 const LoginRoute = require("./Routes/Auth/LoginRoute")
-const cookieParser = require("cookie-parser")
+const IsAuth = require("./Routes/Auth/IsAuthenticaded")
+
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Credentials", true)
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header("Access-Control-Allow-Origin", "http://localhost:3001");
     res.header("Access-Control-Allow-Headers", ["Content-Type", "usc"] );
     next()
 })
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 app.use(RegisterRoute)
 app.use(LoginRoute)
+app.use(IsAuth)
 
 
 

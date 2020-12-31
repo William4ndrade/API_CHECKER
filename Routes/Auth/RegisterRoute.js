@@ -36,6 +36,7 @@ router.post("/RegisterRoute", async (req, res) => {
                 res.status(201).send({
                     ok: true, 
                     statusmensage: "Created",
+                    username: e.Nome
                 })
                 
     

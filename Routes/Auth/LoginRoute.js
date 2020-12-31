@@ -3,7 +3,7 @@ const router = express.Router()
 const bcrypt = require("bcrypt")
 const UserMONGO = require("../../Data/Schemas/UserSchema")
 const jwt = require("../../jwt/JwtFunctions")
-const AuthorizationRouteMiddleware = require("./AuthorizationMiddleware")
+
 
 
 
@@ -25,7 +25,8 @@ router.get("/LoginRoute",async (req, res) => {
 
                 res.status(202).send({
                     ok: true, 
-                    statusmensage: "Login executado com sucesso"
+                    statusmensage: "Login executado com sucesso",
+                    username: UserTest.Nome
                 })
 
 
