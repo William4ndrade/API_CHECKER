@@ -8,11 +8,12 @@ const cookieParser = require("cookie-parser")
 const RegisterRoute = require("./Routes/Auth/RegisterRoute")
 const LoginRoute = require("./Routes/Auth/LoginRoute")
 const IsAuth = require("./Routes/Auth/IsAuthenticaded")
+const Loggout = require("./Routes/Auth/Loggout")
 
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Credentials", true)
-    res.header("Access-Control-Allow-Origin", "http://localhost:3001");
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
     res.header("Access-Control-Allow-Headers", ["Content-Type", "usc"] );
     next()
 })
@@ -23,6 +24,7 @@ app.use(bodyParser.json())
 app.use(RegisterRoute)
 app.use(LoginRoute)
 app.use(IsAuth)
+app.use(Loggout)
 
 
 
