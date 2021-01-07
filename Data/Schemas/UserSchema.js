@@ -5,26 +5,34 @@ const UserSchema = new mongoose.Schema({
 
     Email: {
         required: true,
-        unique: true, 
-        type: String, 
+        unique: true,
+        type: String,
 
     },
 
     Password: {
-        required: true, 
-        type: String, 
+        required: true,
+        type: String,
         select: false
     },
 
     Date: {
-        type: Date, 
+        type: Date,
         default: Date.now()
-    }, 
+    },
 
     Nome: {
-        type: String, 
+        type: String,
         required: true
+    },
+
+    Lists: {
+        type: Array,
+        _id: new mongoose.Types.ObjectId(),
+        default: []
     }
+        
+    
 
 
 })

@@ -9,7 +9,7 @@ const RegisterRoute = require("./Routes/Auth/RegisterRoute")
 const LoginRoute = require("./Routes/Auth/LoginRoute")
 const IsAuth = require("./Routes/Auth/IsAuthenticaded")
 const Loggout = require("./Routes/Auth/LoggoutRoute")
-const NewList = require("./Routes/services/Newlist")
+const NewList = require("./Routes/Controller/Newlist")
 
 
 app.use((req, res, next) => {
