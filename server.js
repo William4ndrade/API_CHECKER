@@ -10,12 +10,13 @@ const LoginRoute = require("./Routes/Auth/LoginRoute")
 const IsAuth = require("./Routes/Auth/IsAuthenticaded")
 const Loggout = require("./Routes/Auth/LoggoutRoute")
 const NewList = require("./Routes/services/Newlist")
+const PushList = require("./Routes/services/pushList")
 
 
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Credentials", true)
+    res.header("Access-Control-Allow-Credentials", true);
     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-    res.header("Access-Control-Allow-Headers", ["Content-Type", "usc"] );
+    res.header("Access-Control-Allow-Headers", ["Content-Type", "usc", "skip","pushNum"] );
     next()
 })
 
@@ -27,6 +28,7 @@ app.use(LoginRoute)
 app.use(IsAuth)
 app.use(Loggout)
 app.use(NewList)
+app.use(PushList)
 
 
 
