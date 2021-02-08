@@ -28,7 +28,7 @@ const UserSchema = new mongoose.Schema({
 
     Lists: {
         type: Array,
-        _id: new mongoose.Types.ObjectId(),
+        ListID: new mongoose.Types.ObjectId(),
         default: []
     }
         

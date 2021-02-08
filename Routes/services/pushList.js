@@ -7,7 +7,7 @@ const mongoose = require("mongoose")
 
 const Limite = rateLimit({
     windowMs: 1 * 60 * 1000 ,
-    max: 10,
+    max: 50,
     message: "too many requests"
 })
 
@@ -15,15 +15,15 @@ const Limite = rateLimit({
 router.get("/Pushmylists",Limite, AuthorizationRoute , async (req,res) => {
     
     const user = req.Auth
- //   const [pushNum,skip ] = [req.headers.pushNum, req.headers.skip]
-
-
+    const [skip, push]= [parseInt(req.headers.skip),parseInt(req.headers.pushnum)]
+    
+    
     const Lists = await UserMONGO.aggregate([
         {$match: {_id: mongoose.Types.ObjectId(user.info.user)}},
         {$unwind: "$Lists"},
         {$project: {Lists: 1, _id: 0}}
         
-    ]).limit(20)
+    ]).skip(skip).limit(push)
 
     if(Lists.length > 0){
         res.status(200).send({

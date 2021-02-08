@@ -5,6 +5,7 @@ const AuthorizationRouteMiddleware = require("./AuthorizationMiddleware")
 
 router.get("/isauth", AuthorizationRouteMiddleware ,async (req, res) => {
     
+    res.setHeader("Cache-Control", "no-cache")
      res.status(200).send({
         ok: true, 
         statusmensage: "Authenticaded", 
