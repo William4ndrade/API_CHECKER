@@ -16,12 +16,19 @@ router.get("/Pushmylists",Limite, AuthorizationRoute , async (req,res) => {
     
     const user = req.Auth
     const [skip, push]= [parseInt(req.headers.skip),parseInt(req.headers.pushnum)]
-    
+    if(user.info.user.length !== 24){
+        res.status(400).send({
+            ok: false,
+            statusmensage: "invalid userid"
+        })
+    }
     
     const Lists = await UserMONGO.aggregate([
         {$match: {_id: mongoose.Types.ObjectId(user.info.user)}},
         {$unwind: "$Lists"},
-        {$project: {Lists: 1, _id: 0}}
+        {$project: {Lists: 1, _id: 0}},
+        {$sort: {"Lists._id": -1}}
+       
         
     ]).skip(skip).limit(push)
 
@@ -31,16 +38,74 @@ router.get("/Pushmylists",Limite, AuthorizationRoute , async (req,res) => {
             data: Lists
         })
 
+    }else{
+        res.status(200).send({
+            ok: false, 
+            statusmensage: "no content",
+            data: []
+
+        })
+
+
     }
 
 
+})
+
+router.get("/Pushlist/:listid", Limite, AuthorizationRoute ,async (req, res) => {
     
-   
+    const userid = "601d3c557790464fe43b8d54"
+    const listid = req.params.listid
+    if(userid.length !== 24  ||  listid.length !== 24){
+        res.status(400).send({
+            ok: false, 
+            statusmensage: "invalid id(s)",
+            id_wrong: userid.length === 24  ? "listid" : "userid",
+            list: []
+        })
+        return
+    }
+
+
+    UserMONGO.aggregate([
+        {$match: {_id: mongoose.Types.ObjectId(userid)}},
+        {$project: {"Lists": 1, _id: 0}},
+        {$unwind: "$Lists"},
+         {$match: {"Lists._id": mongoose.Types.ObjectId(listid)  }}
+    ]).then(mylistselect => {
+            if(mylistselect.length > 0){
+                    res.status(200).send({
+                        ok: true, 
+                        statusmensage: "successful at get list",
+                        list: mylistselect[0],
+
+                    })
+                }else{
+                    res.status(200).send({
+                        ok: true, 
+                        statusmensage: "no content",
+                        list: [],
+
+                    })
+                }
+    }).catch(err => {
+        res.status(400).send({
+            ok: false,
+            statusmensage: "mongoose aggregate error ",
+            list: []
+        })
+
+        // tem q melhorar o back aqui um pouco dps / tem umas porra q da pra da pra derrubar o server
+        // vai no chao doidona tu q pica entao toma
+
+
+    })
+
+
 
     
+
     
-
-
 
 
 })
