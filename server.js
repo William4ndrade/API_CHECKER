@@ -9,7 +9,7 @@ const axios = require("axios").default
 // heroku cheat
    setInterval(() => {
         axios.get("https://checker-api-heroku.herokuapp.com/").then(e => console.log("bateu")).catch(e=> console.log("bateu com erro"))
-   }, 60000)
+   }, 600000)
 
 
 // ROTAS 
