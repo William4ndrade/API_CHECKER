@@ -54,7 +54,7 @@ router.get("/Pushmylists",Limite, AuthorizationRoute , async (req,res) => {
 
 router.get("/Pushlist/:listid", Limite, AuthorizationRoute ,async (req, res) => {
     
-    const userid = "601d3c557790464fe43b8d54"
+    const userid = req.Auth.info.user
     const listid = req.params.listid
     if(userid.length !== 24  ||  listid.length !== 24){
         res.status(400).send({

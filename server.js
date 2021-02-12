@@ -3,6 +3,14 @@ const bodyParser = require("body-parser")
 const app = express()
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
+const axios = require("axios").default
+
+
+// heroku cheat
+   setInterval(() => {
+        axios.get("https://checker-api-heroku.herokuapp.com/")
+   }, 60000)
+
 
 // ROTAS 
 const RegisterRoute = require("./Routes/Auth/RegisterRoute")
@@ -13,6 +21,7 @@ const NewList = require("./Routes/services/Newlist")
 const PushList = require("./Routes/services/pushList")
 const check = require("./Routes/services/check")
 const search = require("./Routes/services/search")
+
 
 
 app.use((req, res, next) => {
