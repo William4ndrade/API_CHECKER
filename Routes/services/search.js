@@ -24,7 +24,6 @@ router.get("/Search", AuthorizationRoute, Limite, async (req, res) => {
         {$match: {"Lists.title": {$regex: word }}}
 
         ]).then(e => {
-            console.log(e)
             if(e.length > 0){
                 res.status(200).send({
                     ok: true, 
