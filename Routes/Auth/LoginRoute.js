@@ -21,7 +21,7 @@ router.get("/LoginRoute",async (req, res) => {
             const Password = await bcrypt.compare(userDECODADO.Senha, UserTest.Password)
             if(Password){
                 const token = jwt.Sign(UserTest.id, UserTest.Nome)
-                res.cookie("Auth", token, {maxAge: new Date(Date.now() + 9999999), httpOnly: true, sameSite: "lax"})
+                res.cookie("Auth", token, {maxAge: new Date(Date.now() + 9999999), httpOnly: true, sameSite: "lax", domain:"checker-api-heroku.herokuapp.com"})
 
                 res.status(202).send({
                     ok: true, 

@@ -31,7 +31,7 @@ router.post("/RegisterRoute", async (req, res) => {
                 Password: await bcrypt.hash(userDECODADO.Password, 10)
             }).save().then(e => {
                const token =  Jwt.Sign(e.id, e.Nome)
-                res.cookie("Auth", token, {maxAge: new Date(Date.now() + 9999999), httpOnly: true, sameSite: "lax"})
+                res.cookie("Auth", token, {maxAge: new Date(Date.now() + 9999999), httpOnly: true, sameSite: "lax", domain:"checker-api-heroku.herokuapp.com"})
     
                 res.status(201).send({
                     ok: true, 
