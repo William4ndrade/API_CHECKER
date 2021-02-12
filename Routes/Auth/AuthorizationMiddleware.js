@@ -3,6 +3,7 @@ const jwt = require("../../jwt/JwtFunctions")
 module.exports = authMiddleware = (req, res, next) => {
 
     const token = req.cookies.Auth
+    console.log(req.cookies)
     if(token){
         try{
             const user = jwt.verify(token)
