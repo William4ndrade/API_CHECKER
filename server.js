@@ -26,7 +26,7 @@ const search = require("./Routes/services/search")
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Credentials", true);
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header("Access-Control-Allow-Origin", "https://ch3cker.herokuapp.com/");
     res.header("Access-Control-Allow-Headers", ["Content-Type", "usc", "skip","pushNum", "code"] );
     res.header("Access-Control-Allow-Methods", ["PUT", "GET", "DELETE", "POST"])
     next()
