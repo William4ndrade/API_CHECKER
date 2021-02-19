@@ -1,16 +1,11 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const app = express()
-const cors = require("cors")
 const cookieParser = require("cookie-parser")
-const axios = require("axios").default
 
 
-// heroku cheat
-   setInterval(() => {
-        axios.get("https://checker-api-heroku.herokuapp.com/").then(e => console.log("bateu")).catch(e=> console.log("bateu com erro no back"))
-        axios.get("https://ch3cker.herokuapp.com/").then(e => console.log("bateu")).catch(e=> console.log("bateu com erro no front"))
-   }, 600000)
+
+
 
 
 // ROTAS 
