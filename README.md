@@ -6,7 +6,7 @@
 # Documentação: 
   - Essa Api não será documentada, pela motivo de ser desenvolvida restritamente para essa aplicação.
   
- ### Codigo FRONT-END: https://github.com/William4ndrade/CHECKER
+ ### Código FRONT-END: https://github.com/William4ndrade/CHECKER
  
 
   
