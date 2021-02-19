@@ -95,8 +95,7 @@ router.get("/Pushlist/:listid", Limite, AuthorizationRoute ,async (req, res) => 
             list: []
         })
 
-        // tem q melhorar o back aqui um pouco dps / tem umas porra q da pra da pra derrubar o server
-        // vai no chao doidona tu q pica entao toma
+
 
 
     })
